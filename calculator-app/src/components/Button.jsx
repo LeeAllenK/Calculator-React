@@ -1,11 +1,11 @@
 import React from 'react';
 
-export function Button({ value, onBtnClick, style}) {
+export function Button({ value, onBtnClick,className, style}) {
 
 	return (
 
 		<button
-			className='Btn'
+			className={className}
 			onClick={onBtnClick}
 			disabled={false}
 			style={style}
