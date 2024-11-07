@@ -26,7 +26,7 @@ function App() {
     num.a === 0 ? 
       setNum({
         ...num,
-        a: num.a = value
+        a:  value
       })
       : setNum({
         ...num,
@@ -34,40 +34,81 @@ function App() {
       })
         console.log(num)
   }
+//FIX OPERFUNCTION
+  const handleOperation = (value ) => {
 
-  const handleOperation = (value) => {
-      num.oper === null || num.oper !== null ? 
+      num.oper === null ? 
       setNum({
          ...num,  
-          oper: num.oper = value ,
-         b: num.b = num.a,
-          a: num.a = 0
+          oper:  value ,
+         b: num.a,
+          a: 0
       })
-      : console.log(num.a)
-
+      : setNum({
+        ...num,
+        oper: value,
+        
+        a: num.b + num.a
+      })
   }
 
-  const handleEqual = (value) => {
-    if(value === '=' && num.oper === '+'){
+  const handleEqual = () => {
+
+      switch(num.oper){
+        case '+' :
+            setNum({
+              ...num,
+                res: num.b + num.a
+             })
+         
+        break;
+        case '-' :
+          setNum({
+              ...num,
+                res: num.b - num.a
+            })
+        break;
+        case 'X' :
+          setNum({
+              ...num,
+                res: num.b * num.a
+            })
+        break;
+        case '/' :
+          setNum({
+              ...num,
+                res:  num.b / num.a
+            })
+        break;
+        default: num
+      }
+  }
+
+  const handleReset = () => {
       setNum({
         ...num,
-          res: num.res = Number(num.b) + Number(num.a)
-      })
-    console.log(num)
-    }
+          a: 0,
+          res: 0
+    })
   }
 
-
+  const handleInvert  = () => {
+      setNum({
+        ...num, 
+        a:  -num.a
+      })
+      
+  }
   return (
     <div className='App'>
       <h1>Calculator</h1>
         <ScreenView
           value={
-          num.a && num.b === 0 
+          num.b === 0
           ? num.a
-          : num.a > 0 && num.oper === '+'
+          : num.b > 0 && num.a >= 0 && num.res === 0
           ? num.a
-          :console.log('d')
+          : num.res > 0 ? num.res : num.res 
           }
         
    
@@ -81,9 +122,9 @@ function App() {
          value={btn} 
         onBtnClick={() => {
           btn === "C"
-            ? resetClickHandler
+            ? handleReset()
             : btn === "+-"
-              ? invertClickHandler
+              ? handleInvert()
               : btn === "%"
                 ? percentClickHandler
                 : btn === "="
