@@ -47,7 +47,6 @@ function App() {
       : setNum({
         ...num,
         oper: value,
-        
         a: num.b + num.a
       })
   }
@@ -56,31 +55,31 @@ function App() {
 
       switch(num.oper){
         case '+' :
-            setNum({
-              ...num,
-                res: Number(num.b) + Number(num.a)
-             })
-         
+            
+         setNum({
+          ...num,
+          res: Number(num.b) + Number(num.a)
+        })
         break;
         case '-' :
           setNum({
-              ...num,
-                res: Number(num.b) - Number(num.a)
-            })
+            ...num,
+            res: Number(num.b) - Number(num.a)
+          })
         break;
         case 'X' :
           setNum({
-              ...num,
-                res: Number(num.b) * Number(num.a)
-            })
+            ...num,
+            res: Number(num.b) * Number(num.a)
+          })
         break;
         case '/' :
           setNum({
-              ...num,
-                res:  Number(num.b) / Number(num.a)
-            })
+            ...num,
+            res: Number(num.b)/Number(num.a)
+          })
         break;
-        default: num
+        default: num.a
       }
   }
 
@@ -88,6 +87,7 @@ function App() {
       setNum({
         ...num,
           a: 0,
+          oper: null,
           res: 0
     })
   }
