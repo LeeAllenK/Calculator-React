@@ -58,26 +58,26 @@ function App() {
         case '+' :
             setNum({
               ...num,
-                res: num.b + num.a
+                res: Number(num.b) + Number(num.a)
              })
          
         break;
         case '-' :
           setNum({
               ...num,
-                res: num.b - num.a
+                res: Number(num.b) - Number(num.a)
             })
         break;
         case 'X' :
           setNum({
               ...num,
-                res: num.b * num.a
+                res: Number(num.b) * Number(num.a)
             })
         break;
         case '/' :
           setNum({
               ...num,
-                res:  num.b / num.a
+                res:  Number(num.b) / Number(num.a)
             })
         break;
         default: num
