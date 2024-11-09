@@ -3,6 +3,7 @@ import './App.css';
 import { Button } from './components/Button';
 import { ScreenView } from './components/Screen';
 
+
   const btns = [
     ["C", "+-", "%", "/"],
     [7, 8, 9, "X"],
@@ -52,8 +53,12 @@ function App() {
         oper: num.oper,
       })
   }
+  const formatResult = (result) => {
+    return Number(result).toLocaleString('en-US', { maximumFractionDigits: 2 });
+  };
 
-  const handleEqual = () => {
+  const handleEqual = (e) => {
+      e.preventDefault();
 
       switch(num.oper){
         case '+':
@@ -119,38 +124,57 @@ function App() {
       }
   }
 
-  const handleReset = () => {
-      setNum({
-        ...num,
-          a: 0,
-          oper: null,
-          res: 0
+  const handleReset = (e) => {
+        e.preventDefault();
+
+    setNum({
+       ...num,
+        a: 0,
+        oper: null,
+        res: 0
     })
   }
-  const handlePercent = () => {
+  const handlePercent = (e) => {
+      e.preventDefault();
+
+    setNum({
+      a: num.a / Math.pow(100, 1)
+    })
 
       num.a === 0  || num.a === '0'? 
       setNum({
         a:  num.b === 0 ? 0 : num.a / Math.pow(100,1) ,
         oper: num.oper,
-        res: num.res / Math.pow(100,1)
+        res: parseFloat(num.res) / 100
     }) : setNum({
-        a: num.a / Math.pow(100,1)
+        a: parseFloat(num.a) / 100
       })
-    console.log(num)
-
   }
 
-  const handleInvert  = () => {
+  const handleInvert  = (e) => {
+      e.preventDefault();
+
       setNum({
         ...num, 
         a:  -num.a,
         res: -num.res
       })
   }
+
+  const handleDot = (e) => {
+    e.preventDefault();
+
+    !/\./.test(num.a) ?
+      setNum( {
+          ...num,
+          a: num.a + '.'
+      }) : num.a
+  }
+
   return (
     <div className='App'>
       <h1>Calculator</h1>
+        <div className='appShadow'>
         <ScreenView
           value={
         num.a ? num.a : num.res
@@ -165,23 +189,24 @@ function App() {
          value={btn} 
         onBtnClick={(e) => {
           btn === "C"
-            ? handleReset()
+            ? handleReset(e)
             : btn === "+-"
-            ? handleInvert()
+            ? handleInvert(e)
             : btn === "%"
-            ? handlePercent(btn)
+            ? handlePercent(e, btn)
             : btn === "="
-            ? handleEqual(btn)
+            ? handleEqual(e, btn)
             : btn === "/" || btn === "X" || btn === "-" || btn === "+"
             ? handleOperation(e, btn)
             : btn === "."
-            ? commaClickHandler
+            ? handleDot(e)
             : handleClick( e, btn)
           }}
         />
         )
         })}
       </div>
+        </div>
     </div>
   );
 }
