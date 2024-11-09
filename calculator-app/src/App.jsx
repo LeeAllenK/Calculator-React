@@ -3,6 +3,13 @@ import './App.css';
 import { Button } from './components/Button';
 import { ScreenView } from './components/Screen';
 
+  const btns = [
+    ["C", "+-", "%", "/"],
+    [7, 8, 9, "X"],
+    [4, 5, 6, "-"],
+    [1, 2, 3, "+"],
+    [0, ".", "="],
+  ];
 
 function App() {
 
@@ -14,72 +21,101 @@ function App() {
       res: 0
     }
     )
-  const btns = [
-    ["C", "+-", "%", "/"],
-    [7, 8, 9, "X"],
-    [4, 5, 6, "-"],
-    [1, 2, 3, "+"],
-    [0, ".", "="],
-  ];
 
-  const handleClick = (value) => {
-    num.a === 0 ? 
+  const handleClick = (e ,value) => {
+    e.preventDefault();
+    num.a <= 0 || num.a.length > 8 || num.a === '0'? 
       setNum({
         ...num,
-        a:  value
+        a: value
       })
       : setNum({
         ...num,
         a: num.a + '' + value
-      })
-        console.log(num)
+      }) 
+      
+      
   }
-//FIX OPERFUNCTION
-  const handleOperation = (value ) => {
+
+  const handleOperation = (e, value ) => {
+      e.preventDefault();
 
       num.oper === null ? 
       setNum({
          ...num,  
-          oper:  value ,
-         b: num.a,
-          a: 0
+        oper:  value ,
+        b: num.a,
+        a: 0
       })
       : setNum({
         ...num,
-        oper: value,
-        a: num.b + num.a
+        oper: num.oper,
       })
   }
 
   const handleEqual = () => {
 
       switch(num.oper){
-        case '+' :
-            
+        case '+':
+        num.b ? 
          setNum({
           ...num,
-          res: Number(num.b) + Number(num.a)
+          a: 0,
+          oper: null,
+          res: Number(num.b) + Number(num.a) 
+        }) : setNum({
+          a: 0,
+          b: 0,
+          oper: null,
+          res: num.a >= 0 ? Number(num.res) + Number(num.a) : 0
         })
+            console.log(num)
         break;
-        case '-' :
-          setNum({
-            ...num,
-            res: Number(num.b) - Number(num.a)
-          })
+        case '-':
+          num.b ?
+            setNum({
+              ...num,
+              a: 0,
+              oper: null,
+              res: Number(num.b) - Number(num.a)
+            }) : setNum({
+              a: 0,
+              b: 0,
+              oper: null,
+              res: Number(num.res) - Number(num.a)
+            })
+          console.log(num)
         break;
-        case 'X' :
-          setNum({
-            ...num,
-            res: Number(num.b) * Number(num.a)
-          })
+        case 'X':
+          num.b ?
+            setNum({
+              ...num,
+              a: 0,
+              oper: null,
+              res: Number(num.b) * Number(num.a)
+            }) : setNum({
+              a: 0,
+              b: 0,
+              oper: null,
+              res: Number(num.res) * Number(num.a)
+            })
+          console.log(num)
         break;
-        case '/' :
-          setNum({
-            ...num,
-            res: Number(num.b)/Number(num.a)
-          })
+        case '/':
+          num.b ?
+            setNum({
+              ...num,
+              a: 0,
+              oper: null,
+              res: Number(num.b) / Number(num.a)
+            }) : setNum({
+              a: 0,
+              b: 0,
+              oper: null,
+              res: Number(num.res) / Number(num.a)
+            })
         break;
-        default: num.a
+        default: num.oper
       }
   }
 
@@ -91,27 +127,34 @@ function App() {
           res: 0
     })
   }
+  const handlePercent = () => {
+
+      num.a === 0  || num.a === '0'? 
+      setNum({
+        a:  num.b === 0 ? 0 : num.a / Math.pow(100,1) ,
+        oper: num.oper,
+        res: num.res / Math.pow(100,1)
+    }) : setNum({
+        a: num.a / Math.pow(100,1)
+      })
+    console.log(num)
+
+  }
 
   const handleInvert  = () => {
       setNum({
         ...num, 
-        a:  -num.a
+        a:  -num.a,
+        res: -num.res
       })
-      
   }
   return (
     <div className='App'>
       <h1>Calculator</h1>
         <ScreenView
           value={
-          num.b === 0
-          ? num.a
-          : num.b > 0 && num.a >= 0 && num.res === 0
-          ? num.a
-          : num.res > 0 ? num.res : num.res 
+        num.a ? num.a : num.res
           }
-        
-   
         />
       <div className='btnBorder'>
         {btns.flat().map((btn) => {
@@ -120,20 +163,20 @@ function App() {
         key={btn}  
         className={btn === "=" ? "equals" : "Btn"}
          value={btn} 
-        onBtnClick={() => {
+        onBtnClick={(e) => {
           btn === "C"
             ? handleReset()
             : btn === "+-"
-              ? handleInvert()
-              : btn === "%"
-                ? percentClickHandler
-                : btn === "="
-                  ? handleEqual(btn)
-                  : btn === "/" || btn === "X" || btn === "-" || btn === "+"
-                    ? handleOperation(btn)
-                    : btn === "."
-                      ? commaClickHandler
-                      : handleClick(btn)
+            ? handleInvert()
+            : btn === "%"
+            ? handlePercent(btn)
+            : btn === "="
+            ? handleEqual(btn)
+            : btn === "/" || btn === "X" || btn === "-" || btn === "+"
+            ? handleOperation(e, btn)
+            : btn === "."
+            ? commaClickHandler
+            : handleClick( e, btn)
           }}
         />
         )
