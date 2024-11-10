@@ -17,5 +17,5 @@
 
 <div id="header">
  <h1 class="heading-element" dir="auto">Lessons Learned:</h1>
-  Make use of 'props'  and components in React. Creating seperate files for a component I have found helps with readability. 
+ Lessons that were learned was to avoid contradicting state and redundant state. To always keep track of how state is being rendered and to always setState.
 </div>
