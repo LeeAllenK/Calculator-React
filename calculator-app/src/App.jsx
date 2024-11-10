@@ -34,8 +34,6 @@ function App() {
         ...num,
         a: num.a + '' + value
       }) 
-      
-      
   }
 
   const handleOperation = (e, value ) => {
@@ -52,6 +50,7 @@ function App() {
         ...num,
         oper: num.oper,
       })
+console.log(num.oper)
   }
   const formatResult = (result) => {
     return Number(result).toLocaleString('en-US', { maximumFractionDigits: 2 });
@@ -62,7 +61,7 @@ function App() {
 
       switch(num.oper){
         case '+':
-        num.b ? 
+        num.b > 0 && num.a > 0? 
          setNum({
           ...num,
           a: 0,
@@ -71,10 +70,10 @@ function App() {
         }) : setNum({
           a: 0,
           b: 0,
-          oper: null,
+          oper: num.oper,
           res: num.a >= 0 ? Number(num.res) + Number(num.a) : 0
         })
-            console.log(num)
+        console.log(num)
         break;
         case '-':
           num.b ?
@@ -89,7 +88,6 @@ function App() {
               oper: null,
               res: Number(num.res) - Number(num.a)
             })
-          console.log(num)
         break;
         case 'X':
           num.b ?
@@ -137,17 +135,17 @@ function App() {
   const handlePercent = (e) => {
       e.preventDefault();
 
-    setNum({
-      a: num.a / Math.pow(100, 1)
-    })
-
-      num.a === 0  || num.a === '0'? 
+      num.a === 0  || num.a === '0' ? 
       setNum({
-        a:  num.b === 0 ? 0 : num.a / Math.pow(100,1) ,
+        a:  num.b === 0 || num.b === '0' ? 0 : num.a / Math.pow(100,1) ,
+        b: 0,
         oper: num.oper,
-        res: parseFloat(num.res) / 100
+        res: num.res > 0 ? Number(formatResult(num.res)) / 100 : num.res
     }) : setNum({
-        a: parseFloat(num.a) / 100
+        a: num.a.toString().length < 8 ? Number(formatResult(num.a)) / 100 : 0,
+        oper: num.oper,
+        b: 0,
+        res: 0
       })
   }
 
@@ -177,7 +175,7 @@ function App() {
         <div className='appShadow'>
         <ScreenView
           value={
-        num.a ? num.a : num.res
+        num.a ? formatResult(num.a) : formatResult(num.res) 
           }
         />
       <div className='btnBorder'>
