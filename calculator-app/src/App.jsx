@@ -25,15 +25,16 @@ function App() {
 
   const handleClick = (e ,value) => {
     e.preventDefault();
-    num.a <= 0 || num.a.length > 8 || num.a === '0'? 
+    num.a.length > 8 ||  num.a === 0? 
       setNum({
         ...num,
-        a: value
+        a: num.a === 0 ? value : num.a
       })
       : setNum({
         ...num,
         a: num.a + '' + value
       }) 
+      console.log(num.a.length)
   }
 
   const handleOperation = (e, value ) => {
@@ -48,7 +49,7 @@ function App() {
       })
       : setNum({
         ...num,
-        oper: num.oper,
+        oper: value,
       })
 console.log(num.oper)
   }
@@ -76,7 +77,7 @@ console.log(num.oper)
         console.log(num)
         break;
         case '-':
-          num.b ?
+          num.b > 0 && num.a > 0 ?
             setNum({
               ...num,
               a: 0,
@@ -85,12 +86,12 @@ console.log(num.oper)
             }) : setNum({
               a: 0,
               b: 0,
-              oper: null,
-              res: Number(num.res) - Number(num.a)
+              oper: num.oper,
+              res: num.a >= 0 ? Number(num.res) - Number(num.a) : 0
             })
         break;
         case 'X':
-          num.b ?
+          num.b > 0 && num.a > 0 ?
             setNum({
               ...num,
               a: 0,
@@ -99,13 +100,13 @@ console.log(num.oper)
             }) : setNum({
               a: 0,
               b: 0,
-              oper: null,
-              res: Number(num.res) * Number(num.a)
+              oper: num.oper,
+              res: num.a >= 0 ? Number(num.res) * Number(num.a) : 0
             })
           console.log(num)
         break;
         case '/':
-          num.b ?
+          num.b > 0 && num.a > 0 ?
             setNum({
               ...num,
               a: 0,
@@ -114,8 +115,8 @@ console.log(num.oper)
             }) : setNum({
               a: 0,
               b: 0,
-              oper: null,
-              res: Number(num.res) / Number(num.a)
+              oper: num.oper,
+              res: num.a >= 0 ? Number(num.res) / Number(num.a) : 0
             })
         break;
         default: num.oper
@@ -162,11 +163,13 @@ console.log(num.oper)
   const handleDot = (e) => {
     e.preventDefault();
 
-    !/\./.test(num.a) ?
-      setNum( {
+   if(!/\./.test(num.a)){
+        setNum({
           ...num,
           a: num.a + '.'
-      }) : num.a
+        })
+      }
+    console.log(num.a)
   }
 
   return (
@@ -175,7 +178,7 @@ console.log(num.oper)
         <div className='appShadow'>
         <ScreenView
           value={
-        num.a ? formatResult(num.a) : formatResult(num.res) 
+        num.a ? formatResult(num.a) : formatResult(num.res)
           }
         />
       <div className='btnBorder'>
