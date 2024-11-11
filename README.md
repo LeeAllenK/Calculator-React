@@ -12,7 +12,7 @@
 
 <div id="header" >
  <h1 class="heading-element" dir="auto">Optimizations:</h1>
-
+Continuously Updating.
 </div>
 
 <div id="header">
