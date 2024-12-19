@@ -16,6 +16,13 @@
 This app currently doesn't have a login that's my next focus. Then my will shift to a more mobile approach utiltizing React Native.
 </div>
 
+<div id="header" >
+ <h1 class="heading-element" dir="auto">Installation:</h1>
+ 1. git clone repo.<br/>
+2. npm install<br/>
+3. npm run dev
+</div>
+
 <div id="header">
  <h1 class="heading-element" dir="auto">Lessons Learned:</h1>
  Lessons that were learned was to avoid contradicting state and redundant state. To always keep track of how state is being rendered and to always setState.
