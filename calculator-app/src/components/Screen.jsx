@@ -1,11 +1,11 @@
 import React from 'react';
 
-export function ScreenView({value}){
+export function ScreenView({value , style}){
 
 	return(
 		<div
 		className='view'
-        style={{ color: 'white', fontSize: 70, fontWeight: 'bolder', backgroundColor: 'black' }}
+        style={style}
 		>
 		{value}	
 		</div>

@@ -54,6 +54,8 @@
 }
 
 .view {
+  display: flex;
+  align-items: center;
   border-radius: 30px 30px 1px 1px;
   border: 1px solid black;
   width: 451px;
