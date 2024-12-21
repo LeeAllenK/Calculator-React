@@ -13,7 +13,7 @@
 
 <div id="header" >
  <h1 class="heading-element" dir="auto">Optimizations:</h1>
-This app currently doesn't have a login that's my next focus. Then my will shift to a more mobile approach utiltizing React Native.
+ Currently this application has multiple event handlers performing tasks so my focus will be to implement useReducer() to consolidate all neccessary state. This app currently doesn't have a login that's my next focus. Then my will shift to a more mobile approach utiltizing React Native.
 </div>
 
 <div id="header" >
