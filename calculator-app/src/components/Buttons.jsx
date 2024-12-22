@@ -1,9 +1,7 @@
 import React from 'react';
 
-export function Button({ value, onBtnClick,className, style}) {
-
+export function Buttons({ value, onBtnClick,className,style}) {
 	return (
-
 		<button
 			className={className}
 			onClick={onBtnClick}

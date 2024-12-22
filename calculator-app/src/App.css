@@ -1,18 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 .App {
-  /* box-shadow: 1px 39px 2px 10px rgba(168, 167, 167, 0.832); */
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: "Roboto", serif;
+  font-weight: 900;
+  font-style: normal;
 }
-
 .appShadow {
   border-radius: 30px 30px 10px 10px;
   box-shadow: 0px 0px 2px 10px rgba(168, 167, 167, 0.832);
   background-color: black;
 }
-
-
 .btnBorder{
   width: 10%;
   display: grid;
@@ -20,8 +20,6 @@
   grid-template-rows: repeat(5, 1fr);
   grid-gap: 10px;
   align-content: center;
-
-
 }
 .equals {
   grid-column: 3 / 5;
@@ -40,19 +38,15 @@
   width: 105.8px;
   height: 100px;
 }
-
 .Btn:hover {
   border: 1px solid rgb(255, 255, 255);
   background-color: orange;
   width: 105.8px;
   height: 100px;
-
 }
-
 .Btn:active {
   background-color: black;
 }
-
 .view {
   display: flex;
   align-items: center;
@@ -61,8 +55,17 @@
   width: 451px;
   height: 200px;
 }
-
 .viewBorder {
   border: 1px solid black;
-
+}
+.Box{
+  display: flex;
+  justify-content: space-between;
+  margin: 25px;  
+}
+.fa-wifi{
+  margin: 4px;
+}
+.fa-battery-full{
+  margin: 4px;
 }

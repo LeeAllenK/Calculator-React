@@ -1,8 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer} from 'react';
 import './App.css';
-import { Button } from './components/Button';
+import { Buttons } from './components/Buttons.jsx';
 import { ScreenView } from './components/Screen';
-
+import {tasksReducer} from './tasksReducer.jsx';
+import {Clock} from './components/Clock.jsx'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBatteryFull } from '@fortawesome/free-solid-svg-icons';
+import { faWifi } from '@fortawesome/free-solid-svg-icons';
 const btns = [
   ["C", "+-", "%", "/"],
   [7, 8, 9, "X"],
@@ -10,9 +14,13 @@ const btns = [
   [1, 2, 3, "+"],
   [0, ".", "="],
 ];
+//Function format for decimal
+  const formatResult = (result) => {
+    return Number(result).toLocaleString('en-US', { maximumFractionDigits: 2 });
+  };
 
 function App() {
-  const [num, setNum] = useState({
+  const [num, dispatch] = useReducer(tasksReducer,{
     a: 0,
     b: 0,
     oper: null,
@@ -23,100 +31,75 @@ function App() {
 //When a number is clicked displays value onto screen 
   const handleClick = (e, value) => {
     e.preventDefault();   
-//logic needed to continuously add a number before operation is performed
-    num.a.length > 8 || num.a === 0 ?
-      setNum({
-        ...num,
-        a: num.a === 0 ? value : num.a
-      })
-      : setNum({
-        ...num,
-        a: num.a + '' + value
-      }) 
+    dispatch({
+      type: 'display_numbers',
+      a: value,
+    })
   };
-  // Event to handle operation needed to evaluate numbers
-  const handleOperation = (e, value) => {
+//Converts number to decimal 
+  const handlePercent = (e) => {
     e.preventDefault();
-    setNum((prevNum) => ({
-      ...prevNum,
-      oper: value,
-      a: 0,
-      b: prevNum.a !== 0 ? prevNum.a : prevNum.res
-    }));
-  };
-
-  const formatResult = (result) => {
-    return Number(result).toLocaleString('en-US', { maximumFractionDigits: 2 });
-  };
-//Logic once user press equal switch case used instead of if...statement for better performance and readability
-  const handleEqual = (e) => {
-    e.preventDefault();
-    const calculateResult = (operation) => {
-      switch(operation) {
-        case '+':
-          return Number(num.b) + Number(num.a);
-        case '-':
-          return Number(num.b) - Number(num.a);
-        case 'X':
-          return Number(num.b) * Number(num.a);
-        case '/':
-          return Number(num.b) / Number(num.a);
-        default:
-          return num.res;
-      }
-    };
-//Logic to continue operation after equal has been pressed
-    const result = calculateResult(num.oper);
-    setNum({
-      ...num,
-      a: 0,
+    dispatch({
+      type: 'percent',
+      a: num.a,
       b: 0,
-      oper: null,
-      res: result,
+      oper: num.oper,
+      res: num.res 
     });
-    console.log(num);
   };
-//Reset numbers to 0 and operation null
+//Reset numbers and result to 0 and operation null
   const handleReset = (e) => {
     e.preventDefault();
-    setNum({
-      ...num,
+      console.log(num.a)
+    dispatch({
+      type: 'reset',
       a: 0,
+      b: 0,
       oper: null,
       res: 0,
     });
   };
-  const handlePercent = (e) => {
+  // Add operation
+  const handleOperation = (e, value) => {
     e.preventDefault();
-    setNum({
-      a: num.a === 0 || num.a === '0' ? 0 : Number(formatResult(num.a)) / 100,
-      b: 0,
-      oper: num.oper,
-      res: num.res > 0 ? Number(formatResult(num.res)) / 100 : num.res,
-    });
+    dispatch({
+      type: 'add_operation',
+      oper: value,
+      a: 0,
+      b: num.a
+    })
+  };
+//Used to evalute
+  const handleEqual = (e , operation) => {
+    e.preventDefault();
+    dispatch({
+      type: 'equal',
+      oper: operation,
+      a: 0,
+      b: num.b,
+
+    })
   };
 //Used to add/remove '-' 
   const handleInvert = (e) => {
     e.preventDefault();
-    setNum({
-      ...num,
-      a: -num.a,
-      res: -num.res,
+    dispatch({
+     type: 'invert',
+      a: num.a,
+      res: num.res,
     });
   };
 //Used to add decimal to number
   const handleDot = (e) => {
     e.preventDefault();
     if(!/\./.test(num.a)) {
-      setNum({
-        ...num,
-        a: num.a + '.',
+      dispatch({
+        type: 'dot',
+        a: num.a ,
       });
     }
-    console.log(num.a);
   };
-
-//Used to update fontsize 
+//Used to update fontsize once a certain length has been reached
   useEffect(() => {
     const resLength = num.a ? num.a.toString().length : num.res.toString().length;
     if(resLength < 11) {
@@ -125,11 +108,17 @@ function App() {
       setFontSize('2.5rem');
     }
   }, [num.a, num.res]);
-
   return (
     <div className='App'>
       <h1>Calculator</h1>
       <div className='appShadow'>
+        <div className='Box'>
+        <Clock/>
+        <div className='iconBox'>
+          <FontAwesomeIcon icon={faWifi} style={{ color:'white' }} />
+          <FontAwesomeIcon icon={faBatteryFull} style={{color:'white'}}/>
+        </div>
+        </div>
         <ScreenView
 //Logic to account for state being updated
           value={num.a ? formatResult(num.a) : formatResult(num.res)}
@@ -140,12 +129,12 @@ function App() {
           }}
         />
         <div className='btnBorder'>
-          {btns.flat().map((btn) => {
+          {btns.flat().map((btn,index) => {
             return (
         //List of Buttons 
-              <Button
+              <Buttons
                  key={btn}
-                 className={btn === "=" ? "equals" : "Btn"}
+                 className={`${btn === "=" ? "equals" : "Btn"}`}
                  value={btn}
                  onBtnClick={(e) => {
                    btn === "C"
@@ -170,5 +159,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
