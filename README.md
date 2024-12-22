@@ -1,6 +1,6 @@
 <div id="header" >
  <h1  class="heading-element" dir="auto">Simple React Calculator <a href="https://fladev-simple-calculator-react.netlify.app/">Vist Here</a> </h1>
-  <img src="https://i.imgur.com/xinO2VV.gif" alt="Calculator">
+  <img src="https://i.imgur.com/EL6MeQP.gif" alt="Calculator">
   A simple calculator that does basic arithmetic.
 </div>
 
