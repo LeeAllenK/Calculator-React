@@ -1,3 +1,4 @@
+import {formatResult} from './App.jsx'
 
 const calculateResult = (operation, a, b) => {
 	switch(operation) {

@@ -15,7 +15,7 @@ const btns = [
   [0, ".", "="],
 ];
 //Function format for decimal
-  const formatResult = (result) => {
+  export const formatResult = (result) => {
     return Number(result).toLocaleString('en-US', { maximumFractionDigits: 2 });
   };
 
