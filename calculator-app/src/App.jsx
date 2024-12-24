@@ -7,6 +7,9 @@ import {Clock} from './components/Clock.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBatteryFull } from '@fortawesome/free-solid-svg-icons';
 import { faWifi } from '@fortawesome/free-solid-svg-icons';
+
+import Home from './components/Home'
+
 const btns = [
   ["C", "+-", "%", "/"],
   [7, 8, 9, "X"],
@@ -110,6 +113,8 @@ function App() {
   }, [num.a, num.res]);
   return (
     <div className='App'>
+      <Home/>
+   
       <h1>Calculator</h1>
       <div className='appShadow'>
         <div className='Box'>
