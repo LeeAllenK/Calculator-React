@@ -20,7 +20,7 @@
  <h1 class="heading-element" dir="auto">Installation:</h1>
   
  1. git clone repo.<br/>
-2. create project  www.console.firebase
+2. create project  www.console.firebase.google
 3. npm install<br/>
 4. npm install dotenv --save in root folder<br/>
 5. Create .env file inside root folder
