@@ -21,12 +21,12 @@
   
  1. git clone repo.<br/>
 2. create project https://console.firebase.google.com/
-2. npm install<br/>
-2. npm install dotenv --save in root folder<br/>
-3. Create .env file inside root folder
-4. Inside .env add text VITE_API_KEY='API_KEY'
-5. naviagate to components/firebase.jsx
-3. npm run dev
+3. npm install<br/>
+4. npm install dotenv --save in root folder<br/>
+5. Create .env file inside root folder
+6. Inside .env add text VITE_API_KEY='${API_KEY}'
+7. naviagate to components/firebase.jsx add your VITE_API_KEY like so "import.meta.env.VITE.API_KEY"
+8. npm run dev
  
 </div>
 
