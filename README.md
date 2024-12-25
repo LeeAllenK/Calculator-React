@@ -13,14 +13,21 @@
 
 <div id="header" >
  <h1 class="heading-element" dir="auto">Optimizations:</h1>
- Currently this application has multiple event handlers performing tasks so my focus will be to implement useReducer() to consolidate all neccessary state. This app currently doesn't have a login that's my next focus. Then my will shift to a more mobile approach utiltizing React Native.
+ Firebase was used to authenicate users, currently the application only can be logged into if the user has a gmail account. Creating multiple forms of login is my next update. Then my will shift to a more mobile approach utiltizing React Native.
 </div>
 
 <div id="header" >
  <h1 class="heading-element" dir="auto">Installation:</h1>
+  
  1. git clone repo.<br/>
-2. npm install<br/>
-3. npm run dev
+3. npm install<br/>
+4. npm install dotenv --save in root folder<br/>
+2. create project navigate https://firebase.google.com
+5. Create .env file inside root folder
+6. Inside .env add text VITE_API_KEY='${API_KEY}'
+7. naviagate to components/firebase.jsx add your VITE_API_KEY like so "import.meta.env.VITE.API_KEY"
+8. npm run dev
+ 
 </div>
 
 <div id="header">
