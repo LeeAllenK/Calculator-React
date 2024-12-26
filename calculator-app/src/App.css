@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+
+body{
+  font-family: "Roboto", serif;
+  font-weight: 900;
+  font-style: normal;
+}
 .App {
   display: flex;
   flex-direction: column;
@@ -12,6 +18,30 @@
   border-radius: 30px 30px 10px 10px;
   box-shadow: 0px 0px 2px 10px rgba(168, 167, 167, 0.832);
   background-color: black;
+}
+.logout{
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  
+}
+.logoutBtn{
+  border-radius: 30px;
+  border: 6px solid black;
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: inherit;
+  font-style: normal;
+  background-color: red;
+  color: white;
+}
+.logoutBtn:active{
+   border-color: red;
+    transform: translateY(2px);
+}
+.logout.active{
+  color: red
 }
 .btnBorder{
   width: 10%;

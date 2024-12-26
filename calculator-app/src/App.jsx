@@ -112,9 +112,9 @@ function App() {
     }
   }, [num.a, num.res]);
   return (
-    <div className='App'>
+    <>  
       <Home/>
-   
+    <div className='App'>
       <h1>Calculator</h1>
       <div className='appShadow'>
         <div className='Box'>
@@ -162,6 +162,7 @@ function App() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 export default App;
