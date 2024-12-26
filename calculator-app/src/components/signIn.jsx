@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { signInWithGoogleRedirect, signInWithGooglePopup } from './signinWithGoogle';
+import { signInWithGooglePopup } from './signinWithGoogle';
 import { signUpWithEmail } from './signUpWithEmail';
 import { signInWithEmail } from './signInWithEmail';
 import App from '../App.jsx';
@@ -14,29 +14,23 @@ function SignIn() {
 	const [password, setPassword] = useState('');
 	const [isRegistering, setIsRegistering] = useState(false);
 
-	const handleClickRedirect = async () => {
-		try {
-			console.log('Redirecting...'); // Debugging line
-			await signInWithGoogleRedirect();
-			setValue('Signed In');
-			localStorage.setItem('email', 'user@example.com'); // Replace with actual user email
-		} catch(err) {
-			setError(getCustomErrorMessage(err.code));
-		}
+	const clearError = () => {
+		setError(null);
 	};
 
 	const handleClickPopup = async () => {
+		clearError();
 		try {
 			await signInWithGooglePopup();
 			setValue('Signed In');
-			localStorage.setItem('email', 'user@example.com'); // Replace with actual user email
+			localStorage.setItem('email', 'user@example.com');
 		} catch(err) {
-			console.log('Popup sign-in failed, falling back to redirect...'); // Debugging line
-			handleClickRedirect();
+			setError(err.message);
 		}
 	};
 
 	const handleSignUp = async () => {
+		clearError();
 		if(!firstName) {
 			setError('First name is required.');
 			return;
@@ -68,11 +62,12 @@ function SignIn() {
 			localStorage.setItem('firstName', firstName);
 			localStorage.setItem('lastName', lastName);
 		} catch(err) {
-			setError(getCustomErrorMessage(err.code));
+			setError('Email already in use');
 		}
 	};
 
 	const handleSignIn = async () => {
+		clearError();
 		if(!email) {
 			setError('Email is required.');
 			return;
@@ -90,7 +85,7 @@ function SignIn() {
 			setValue('Signed In');
 			localStorage.setItem('email', email);
 		} catch(err) {
-			setError(getCustomErrorMessage(err.code));
+			setError('Incorrect password. Please try again.');
 		}
 	};
 
@@ -103,34 +98,9 @@ function SignIn() {
 		return password.length >= 6;
 	};
 
-	const getCustomErrorMessage = (errorCode) => {
-		switch(errorCode) {
-			case 'auth/email-already-in-use':
-				return 'This email is already in use. Please use a different email.';
-			case 'auth/invalid-email':
-				return 'The email address is not valid. Please enter a valid email.';
-			case 'auth/weak-password':
-				return 'The password is too weak. Please enter a stronger password.';
-			case 'auth/user-not-found':
-				return 'No user found with this email. Please check the email and try again.';
-			case 'auth/wrong-password':
-				return 'Incorrect password. Please try again.';
-			default:
-				return 'An error occurred. Please try again.';
-		}
-	};
-
 	useEffect(() => {
 		setValue(localStorage.getItem('email'));
 	}, []);
-
-	useEffect(() => {
-		const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-		console.log('Is Mobile:', isMobile); // Debugging line
-		if(isMobile && !value) {
-			handleClickRedirect();
-		}
-	}, [value]);
 
 	return (
 		<div className='signin-signup'>
@@ -167,7 +137,7 @@ function SignIn() {
 							<button className="signupBtn" onClick={handleSignUp}>
 								Sign-Up with Email
 							</button><br />
-							<button className="toggleBtn" onClick={() => setIsRegistering(false)}>
+							<button className="toggleBtn" onClick={() => { clearError(); setIsRegistering(false); }}>
 								Already have an account? Sign In
 							</button>
 						</div>
@@ -191,7 +161,7 @@ function SignIn() {
 							<button className="signinBtn" onClick={handleClickPopup}>
 								Sign-In with Gmail
 							</button><br />
-							<button className="toggleBtn" onClick={() => setIsRegistering(true)}>
+							<button className="toggleBtn" onClick={() => { clearError(); setIsRegistering(true); }}>
 								Don't have an account? Register
 							</button>
 						</div>
