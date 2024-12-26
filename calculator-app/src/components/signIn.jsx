@@ -21,7 +21,7 @@ function SignIn() {
 			setValue('Signed In');
 			localStorage.setItem('email', 'user@example.com'); // Replace with actual user email
 		} catch(err) {
-			setError(err.message);
+			setError(getCustomErrorMessage(err.code));
 		}
 	};
 
@@ -37,6 +37,30 @@ function SignIn() {
 	};
 
 	const handleSignUp = async () => {
+		if(!firstName) {
+			setError('First name is required.');
+			return;
+		}
+		if(!lastName) {
+			setError('Last name is required.');
+			return;
+		}
+		if(!email) {
+			setError('Email is required.');
+			return;
+		}
+		if(!validateEmail(email)) {
+			setError('Invalid email format.');
+			return;
+		}
+		if(!password) {
+			setError('Password is required.');
+			return;
+		}
+		if(!validatePassword(password)) {
+			setError('Password must be at least 6 characters long.');
+			return;
+		}
 		try {
 			await signUpWithEmail(email, password, firstName, lastName);
 			setValue('Signed Up');
@@ -44,17 +68,55 @@ function SignIn() {
 			localStorage.setItem('firstName', firstName);
 			localStorage.setItem('lastName', lastName);
 		} catch(err) {
-			setError(err.message);
+			setError(getCustomErrorMessage(err.code));
 		}
 	};
 
 	const handleSignIn = async () => {
+		if(!email) {
+			setError('Email is required.');
+			return;
+		}
+		if(!validateEmail(email)) {
+			setError('Invalid email format.');
+			return;
+		}
+		if(!password) {
+			setError('Password is required.');
+			return;
+		}
 		try {
 			await signInWithEmail(email, password);
 			setValue('Signed In');
 			localStorage.setItem('email', email);
 		} catch(err) {
-			setError(err.message);
+			setError(getCustomErrorMessage(err.code));
+		}
+	};
+
+	const validateEmail = (email) => {
+		const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return re.test(email);
+	};
+
+	const validatePassword = (password) => {
+		return password.length >= 6;
+	};
+
+	const getCustomErrorMessage = (errorCode) => {
+		switch(errorCode) {
+			case 'auth/email-already-in-use':
+				return 'This email is already in use. Please use a different email.';
+			case 'auth/invalid-email':
+				return 'The email address is not valid. Please enter a valid email.';
+			case 'auth/weak-password':
+				return 'The password is too weak. Please enter a stronger password.';
+			case 'auth/user-not-found':
+				return 'No user found with this email. Please check the email and try again.';
+			case 'auth/wrong-password':
+				return 'Incorrect password. Please try again.';
+			default:
+				return 'An error occurred. Please try again.';
 		}
 	};
 
@@ -76,7 +138,6 @@ function SignIn() {
 				<App />
 			) : (
 				<>
-					
 					{isRegistering ? (
 						<div className="email-signup">
 							<input
@@ -105,7 +166,7 @@ function SignIn() {
 							/>
 							<button className="signupBtn" onClick={handleSignUp}>
 								Sign-Up with Email
-							</button><br/>
+							</button><br />
 							<button className="toggleBtn" onClick={() => setIsRegistering(false)}>
 								Already have an account? Sign In
 							</button>
@@ -126,10 +187,10 @@ function SignIn() {
 							/>
 							<button className="signinBtn" onClick={handleSignIn}>
 								Sign-In with Email
-							</button><br/>
+							</button><br />
 							<button className="signinBtn" onClick={handleClickPopup}>
 								Sign-In with Gmail
-							</button><br/>
+							</button><br />
 							<button className="toggleBtn" onClick={() => setIsRegistering(true)}>
 								Don't have an account? Register
 							</button>
