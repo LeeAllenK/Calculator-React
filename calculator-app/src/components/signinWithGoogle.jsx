@@ -1,41 +1,18 @@
-import { useState, useEffect } from "react";
-import { auth, provider } from './firebase.jsx';
-import { signInWithPopup } from "firebase/auth"
-import App from '../App.jsx'
+import { auth, provider } from './firebase';
+import { signInWithRedirect, signInWithPopup } from "firebase/auth";
 
-function SignIn() {
-
-	const [value, setValue] = useState('');
-	const handleClick = async () => {
-		try {
-			await signInWithPopup(auth, provider);
-			setValue('Signed In')
-		}catch(err) {
-			return err;
-		}
+export const signInWithGoogleRedirect = async () => {
+	try {
+		await signInWithRedirect(auth, provider);
+	} catch(err) {
+		throw new Error(err.message);
 	}
+};
 
-
-	useEffect(() => {
-		setValue(localStorage.getItem('email'));
-	}, [])
-
-	return (
-		<div>
-			{value ? <App /> :
-			<>
-				<div className="signIn" >
-					<button
-						className="signinBtn"
-						onClick={handleClick}
-					>
-						Sign-In with Gmail</button>
-				</div>
-			</>
-
-			}
-		</div>
-	)
-}
-
-export default SignIn;
+export const signInWithGooglePopup = async () => {
+	try {
+		await signInWithPopup(auth, provider);
+	} catch(err) {
+		throw new Error(err.message);
+	}
+};
