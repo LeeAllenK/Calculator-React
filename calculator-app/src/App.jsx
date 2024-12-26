@@ -111,11 +111,11 @@ function App() {
       setFontSize('2.5rem');
     }
   }, [num.a, num.res]);
-  return (
-    <>  
-      <Home/>
+  return ( 
     <div className='App'>
-      <h1>Calculator</h1>
+      <div className='header'> 
+        <Home/>
+      </div>
       <div className='appShadow'>
         <div className='Box'>
         <Clock/>
@@ -162,7 +162,6 @@ function App() {
         </div>
       </div>
     </div>
-    </>
   );
 }
 export default App;
