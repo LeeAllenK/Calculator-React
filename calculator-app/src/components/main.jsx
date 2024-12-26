@@ -12,7 +12,6 @@ const Home = () => {
 			console.error('Error signing out:', err);
 		}
 	};
-
 	return (
 		<div className="home">
 			<h1>Welcome to the Home Page</h1>
