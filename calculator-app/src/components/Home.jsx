@@ -7,7 +7,6 @@ function Home({children , style}) {
 		window.location.reload();
 	}
 	return (
-		
 			<div className="logout" >
 			<button 
 			className="logoutBtn" 
@@ -18,7 +17,6 @@ function Home({children , style}) {
 			Logout
 			</button>
 			</div>
-		
 	)
 }
 export default Home;
