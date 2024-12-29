@@ -6,7 +6,7 @@
 
 <div id="header" >
  <h1 class="heading-element" dir="auto">How It's Made:</h1>
- Tech used: HTML, CSS, JavaScript , React , Node.js , Vite<br/>
+ Tech used: HTML, CSS, JavaScript, React, Vite<br/>
  This is a basic calculator that has the ability to add, subtract, multiply and divide. The UI design was inspired by modern calculators which are used mainly on phones.
   Each value, operation , result and the fontSize are updated using state. Commas are automatically added to improve users experience while using this calculator. 
 </div>
