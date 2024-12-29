@@ -32,6 +32,5 @@
 
 <div id="header">
  <h1 class="heading-element" dir="auto">Lessons Learned:</h1>
- Lessons that were learned was to avoid contradicting state and redundant state. To always keep track of how state is being rendered and to always setState.
- Also take advantage of React's hooks when updating state throughout my applications.
+ Ensured that state management is clear and consistent to prevent any conflicting or unnecessary state updates. Always keep track of how state is being rendered and ensure that setState. Finally, I took advantage of React's hooks, such as useReducer and useContext, to manage state and pass values efficiently throughout the application.
 </div>
