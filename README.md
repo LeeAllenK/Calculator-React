@@ -6,7 +6,7 @@
 
 <div id="header" >
  <h1 class="heading-element" dir="auto">How It's Made:</h1>
- Tech used: HTML, CSS, JavaScript , React , Node.js , Vite<br/>
+ Tech used: HTML, CSS, JavaScript, React, Vite<br/>
  This is a basic calculator that has the ability to add, subtract, multiply and divide. The UI design was inspired by modern calculators which are used mainly on phones.
   Each value, operation , result and the fontSize are updated using state. Commas are automatically added to improve users experience while using this calculator. 
 </div>
@@ -32,6 +32,5 @@
 
 <div id="header">
  <h1 class="heading-element" dir="auto">Lessons Learned:</h1>
- Lessons that were learned was to avoid contradicting state and redundant state. To always keep track of how state is being rendered and to always setState.
- Also take advantage of React's hooks when updating state throughout my applications.
+ Ensured that state management is clear and consistent to prevent any conflicting or unnecessary state updates. Always keep track of how state is being rendered and ensure that setState. Finally, I took advantage of React's hooks, such as useReducer and useContext, to manage state and pass values efficiently throughout the application.
 </div>
