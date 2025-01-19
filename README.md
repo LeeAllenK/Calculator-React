@@ -21,7 +21,7 @@
   
  1. git clone repo.<br/>
 3. npm install<br/>
-4. npm install dotenv --save in root folder<br/>
+4. npm install dotenv in root folder<br/>
 2. create project navigate https://firebase.google.com
 5. Create .env file inside root folder
 6. Inside .env add text VITE_API_KEY='${API_KEY}'
